@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ReceiptGenerator {
+
     public String generate(Payment payment) {
         return "Recibo: Pagamento de R$" + payment.getAmount();
     }
