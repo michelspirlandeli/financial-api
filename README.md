@@ -77,8 +77,8 @@ Isso facilita testes unitários e promove um código desacoplado e extensível.
 
 2. **Clone o repositório:**
 ```bash
-git clone https://github.com/seu-usuario/solid-spring-pagamento.git
-cd solid-spring-pagamento
+git clone https://github.com/michelspirlandeli/financial-api.git
+cd financial-api
 ```
 
 3. **Execute o projeto:**
@@ -103,7 +103,7 @@ Content-Type: application/json
 ## 📁 Estrutura do Projeto
 
 ```
-src/main/java/com/exemplo/financeiro/
+src/main/java/com/financial
 ├── controller/
 │   └── PaymentController.java
 ├── model/
