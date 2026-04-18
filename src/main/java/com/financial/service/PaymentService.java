@@ -1,5 +1,6 @@
 package com.financial.service;
 
+import com.financial.exception.PaymentMethodNotFoundException;
 import com.financial.model.Payment;
 import com.financial.payment.PaymentStrategy;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ public class PaymentService {
         PaymentStrategy strategy = strategyMap.get(key);
 
         if (strategy == null) {
-            throw new RuntimeException("Método de pagamento não encontrado.");
+            throw new PaymentMethodNotFoundException(payment.getMethod());
         }
 
         strategy.process(payment);
