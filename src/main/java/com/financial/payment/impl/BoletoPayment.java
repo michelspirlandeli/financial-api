@@ -8,6 +8,11 @@ import org.springframework.stereotype.Component;
 public class BoletoPayment implements PaymentStrategy {
 
     @Override
+    public String key() {
+        return "boleto";
+    }
+
+    @Override
     public void process(Payment payment) {
         System.out.println("Gerando boleto no valor de: " + payment.getAmount());
     }

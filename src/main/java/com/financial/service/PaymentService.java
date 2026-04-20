@@ -16,11 +16,11 @@ public class PaymentService {
 
     public PaymentService(List<PaymentStrategy> strategies) {
         this.strategyMap = strategies.stream()
-                .collect(Collectors.toMap(s -> s.getClass().getSimpleName().toLowerCase(), s -> s));
+                .collect(Collectors.toMap(PaymentStrategy::key, s -> s));
     }
 
     public void processPayment(Payment payment) {
-        String key = payment.getMethod().toLowerCase() + "payment"; // ex: "pixpayment"
+        String key = payment.getMethod().toLowerCase();
         PaymentStrategy strategy = strategyMap.get(key);
 
         if (strategy == null) {

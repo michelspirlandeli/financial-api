@@ -8,6 +8,11 @@ import org.springframework.stereotype.Component;
 public class PixPayment implements PaymentStrategy {
 
     @Override
+    public String key() {
+        return "pix";
+    }
+
+    @Override
     public void process(Payment payment) {
         System.out.println("Processando pagamento com Pix: " + payment.getAmount());
     }
