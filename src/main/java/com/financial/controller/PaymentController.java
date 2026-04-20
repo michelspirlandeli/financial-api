@@ -1,5 +1,6 @@
 package com.financial.controller;
 
+import com.financial.dto.PaymentRequestDTO;
 import com.financial.model.Payment;
 import com.financial.service.PaymentService;
 import jakarta.validation.Valid;
@@ -20,7 +21,8 @@ public class PaymentController {
     }
 
     @PostMapping
-    public ResponseEntity<String> pagar(@Valid @RequestBody Payment payment) {
+    public ResponseEntity<String> pagar(@Valid @RequestBody PaymentRequestDTO dto) {
+        Payment payment = new Payment(dto.getAmount(), dto.getMethod(), dto.getCustomerId());
         service.processPayment(payment);
         return ResponseEntity.ok("Pagamento realizado com sucesso.");
     }

@@ -1,8 +1,8 @@
 package com.financial.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.financial.dto.PaymentRequestDTO;
 import com.financial.exception.PaymentMethodNotFoundException;
-import com.financial.model.Payment;
 import com.financial.service.PaymentService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +34,7 @@ class PaymentControllerTest {
 
     @Test
     void deveRetornar200ParaPagamentoValido() throws Exception {
-        Payment payment = new Payment(BigDecimal.valueOf(150), "pix", "cliente-1");
+        PaymentRequestDTO payment = new PaymentRequestDTO(BigDecimal.valueOf(150), "pix", "cliente-1");
 
         mockMvc.perform(post("/pagamentos")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -46,7 +46,7 @@ class PaymentControllerTest {
 
     @Test
     void deveRetornar400QuandoAmountNulo() throws Exception {
-        Payment payment = new Payment(null, "pix", "cliente-1");
+        PaymentRequestDTO payment = new PaymentRequestDTO(null, "pix", "cliente-1");
 
         mockMvc.perform(post("/pagamentos")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -57,7 +57,7 @@ class PaymentControllerTest {
 
     @Test
     void deveRetornar400QuandoAmountNegativo() throws Exception {
-        Payment payment = new Payment(BigDecimal.valueOf(-10), "pix", "cliente-1");
+        PaymentRequestDTO payment = new PaymentRequestDTO(BigDecimal.valueOf(-10), "pix", "cliente-1");
 
         mockMvc.perform(post("/pagamentos")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -68,7 +68,7 @@ class PaymentControllerTest {
 
     @Test
     void deveRetornar400QuandoMethodVazio() throws Exception {
-        Payment payment = new Payment(BigDecimal.valueOf(100), "", "cliente-1");
+        PaymentRequestDTO payment = new PaymentRequestDTO(BigDecimal.valueOf(100), "", "cliente-1");
 
         mockMvc.perform(post("/pagamentos")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -79,7 +79,7 @@ class PaymentControllerTest {
 
     @Test
     void deveRetornar422ParaMetodoNaoSuportado() throws Exception {
-        Payment payment = new Payment(BigDecimal.valueOf(100), "bitcoin", "cliente-1");
+        PaymentRequestDTO payment = new PaymentRequestDTO(BigDecimal.valueOf(100), "bitcoin", "cliente-1");
         doThrow(new PaymentMethodNotFoundException("bitcoin")).when(paymentService).processPayment(any());
 
         mockMvc.perform(post("/pagamentos")
