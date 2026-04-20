@@ -2,6 +2,7 @@ package com.financial.controller;
 
 import com.financial.model.Payment;
 import com.financial.service.PaymentService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +20,7 @@ public class PaymentController {
     }
 
     @PostMapping
-    public ResponseEntity<String> pagar(@RequestBody Payment payment) {
+    public ResponseEntity<String> pagar(@Valid @RequestBody Payment payment) {
         service.processPayment(payment);
         return ResponseEntity.ok("Pagamento realizado com sucesso.");
     }
