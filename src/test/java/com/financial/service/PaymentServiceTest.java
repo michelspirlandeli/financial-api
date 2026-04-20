@@ -6,6 +6,7 @@ import com.financial.payment.PaymentStrategy;
 import com.financial.payment.impl.BoletoPayment;
 import com.financial.payment.impl.CreditCardPayment;
 import com.financial.payment.impl.PixPayment;
+import com.financial.repository.PaymentRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -13,19 +14,22 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class PaymentServiceTest {
 
     private PaymentService service;
+    private PaymentRepository repository;
 
     @BeforeEach
     void setUp() {
+        repository = mock(PaymentRepository.class);
         List<PaymentStrategy> strategies = List.of(
                 new PixPayment(),
                 new BoletoPayment(),
                 new CreditCardPayment()
         );
-        service = new PaymentService(strategies);
+        service = new PaymentService(strategies, repository);
     }
 
     @Test

@@ -3,6 +3,7 @@ package com.financial.service;
 import com.financial.exception.PaymentMethodNotFoundException;
 import com.financial.model.Payment;
 import com.financial.payment.PaymentStrategy;
+import com.financial.repository.PaymentRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,10 +14,12 @@ import java.util.stream.Collectors;
 public class PaymentService {
 
     private final Map<String, PaymentStrategy> strategyMap;
+    private final PaymentRepository repository;
 
-    public PaymentService(List<PaymentStrategy> strategies) {
+    public PaymentService(List<PaymentStrategy> strategies, PaymentRepository repository) {
         this.strategyMap = strategies.stream()
                 .collect(Collectors.toMap(PaymentStrategy::key, s -> s));
+        this.repository = repository;
     }
 
     public void processPayment(Payment payment) {
@@ -28,5 +31,6 @@ public class PaymentService {
         }
 
         strategy.process(payment);
+        repository.save(payment);
     }
 }
